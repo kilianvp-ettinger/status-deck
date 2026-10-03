@@ -12,17 +12,17 @@ const BAND = {
   },
 } as const
 
-describe('usage band', () => {
+describe('status band', () => {
   test('draws on the terminal as a text line with the limits', async ($, on) => {
     on('ui.render', { component: 'AbovePrompt' }, ($, e) => $.ui.resolve(e).Text({ children: [''] }) as never)
-    const ui = await $.ui.mount({ plugin: 'usage-meter-pills', surface: 'terminal', ...BAND } as never)
+    const ui = await $.ui.mount({ plugin: 'status-deck', surface: 'terminal', ...BAND } as never)
     expect(await ui.find({ type: 'Text', text: /5h/ })).toBeDefined()
     await ui.unmount()
   })
 
   test('draws on the desktop as an image with an accessible description', async ($, on) => {
     on('ui.render', { component: 'AbovePrompt' }, ($, e) => $.ui.resolve(e).Text({ children: [''] }) as never)
-    const ui = await $.ui.mount({ plugin: 'usage-meter-pills', surface: 'desktop', ...BAND } as never)
+    const ui = await $.ui.mount({ plugin: 'status-deck', surface: 'desktop', ...BAND } as never)
     expect(await ui.find({ type: 'Svg' })).toBeDefined()
     await ui.unmount()
   })
@@ -31,10 +31,10 @@ describe('usage band', () => {
 describe('settings pane', () => {
   test('lists the sections and opens with Style expanded', async $ => {
     const ui = await $.ui.mount({
-      plugin: 'usage-meter-pills',
+      plugin: 'status-deck',
       surface: 'desktop',
       component: 'Pane',
-      requestId: 'pills-settings',
+      requestId: 'status-deck-settings',
       props: {},
     } as never)
     expect(await ui.find({ key: 'group:0' })).toBeDefined()

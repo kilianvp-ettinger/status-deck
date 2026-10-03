@@ -1,22 +1,22 @@
 {
-  "name": "usage-meter-mod",
+  "name": "status-deck",
   "owner": {
     "name": "wellbrained",
     "url": "https://github.com/wellbrained"
   },
   "metadata": {
-    "description": "Usage Meter Pills: a pill-style usage band for the Claude Code desktop app"
+    "description": "Status Deck: a configurable status band above the prompt for the Claude Code desktop app"
   },
   "plugins": [
     {
-      "name": "usage-meter-pills",
+      "name": "status-deck",
       "source": "./",
-      "description": "Pill-style band above the prompt: 5-hour and weekly plan limits with pace marker and reset time, context window, git branch, optional tokens and cost. Options: /usage-meter-options",
+      "description": "Status band above the prompt: 5-hour and weekly plan limits with pace marker and reset time, context window, git branch, optional tokens and cost. Options: /status-deck-options",
       "version": "0.4.4",
       "category": "monitoring",
       "keywords": ["usage", "limits", "context", "git", "statusline", "desktop"],
-      "homepage": "https://github.com/wellbrained/usage-meter-mod",
-      "repository": "https://github.com/wellbrained/usage-meter-mod"
+      "homepage": "https://github.com/wellbrained/status-deck",
+      "repository": "https://github.com/wellbrained/status-deck"
     }
   ]
 }

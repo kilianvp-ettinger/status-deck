@@ -1,13 +1,13 @@
-// usage-meter-pills
+// status-deck
 // Pills above the prompt: 5h / 7d limits with a pace marker and reset time, context window,
 // git branch, prompt cache warmth, and optionally session tokens and cost. Desktop draws an SVG; the terminal gets text.
-// /usage-meter-options opens the settings pane; the gear next to the band opens it too.
+// /status-deck-options opens the settings pane; the gear next to the band opens it too.
 
 const STORE_KEY = 'last-readings'
 const TOTALS_KEY = 'session-totals'
 const TOGGLES_KEY = 'toggles'
 const CACHE_KEY = 'cache-warmth'
-const PANE = 'pills-settings'
+const PANE = 'status-deck-settings'
 const WINDOW_MS = { five_hour: 5 * 3600e3, seven_day: 7 * 86400e3 }
 
 const FONT = "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
@@ -369,7 +369,7 @@ async function persistToggles($) {
 
 async function openOptions($) {
   if (!isDirty) committedColors = pickColors(toggles)
-  await $.ui.open({ id: PANE, title: 'Usage pills' })
+  await $.ui.open({ id: PANE, title: 'Status Deck' })
 }
 
 async function refresh($) {
@@ -947,7 +947,7 @@ export function register(on, options) {
       toggles = savedToggles
       committedColors = pickColors(toggles)
     }
-    await $.command.register({ name: 'usage-meter-options', description: 'Choose which pills the usage band shows' })
+    await $.command.register({ name: 'status-deck-options', description: 'Choose what the Status Deck band shows and how it looks' })
     const savedOpen = await $.store.get(OPEN_GROUPS_KEY)
     if (Array.isArray(savedOpen)) openGroups = savedOpen.filter((n) => Number.isInteger(n))
     const savedTotals = await $.store.get(TOTALS_KEY)
@@ -1003,9 +1003,9 @@ export function register(on, options) {
     return next(e)
   })
 
-  on('command.run', { command: 'usage-meter-options' }, async ($) => {
+  on('command.run', { command: 'status-deck-options' }, async ($) => {
     await openOptions($)
-    return { text: 'Usage pills settings opened.' }
+    return { text: 'Status Deck settings opened.' }
   })
 
   // The settings pane. Everything is driven by SETTINGS/GROUPS, so a new option, theme or color
@@ -1268,7 +1268,7 @@ export function register(on, options) {
         Box({
           flexDirection: 'column',
           children: [
-            Text({ bold: true, children: ['Usage meter'] }),
+            Text({ bold: true, children: ['Status Deck'] }),
             Text({ dimColor: true, children: ['Click a section to open or close it. Everything applies right away; only colors need Save.'] }),
           ],
         }),

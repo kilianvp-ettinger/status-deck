@@ -1,4 +1,4 @@
-# Usage Meter Pills
+# Status Deck
 
 A pill-style band above the Claude Code prompt (desktop app) that shows your plan usage at a glance.
 
@@ -17,20 +17,20 @@ A pill-style band above the Claude Code prompt (desktop app) that shows your pla
 From the marketplace in this repo:
 
 ```text
-/plugin marketplace add wellbrained/usage-meter-mod
-/plugin install usage-meter-pills@usage-meter-mod
+/plugin marketplace add wellbrained/status-deck
+/plugin install status-deck@status-deck
 ```n
 Or load a local copy for one run:
 
 ```bash
-claude --plugin-dir "D:\Github\usage-meter-pills"
+claude --plugin-dir "<path to your clone>"
 ```
 
-Or put the folder in `~/.claude/mods/` to load it every time. Disable any older usage-meter plugin so you don't get two bands.
+Or put the folder in `~/.claude/mods/` to load it every time. Disable any older usage-meter-pills plugin (this mod used to be called Usage Meter Pills) so you don't get two bands.
 
 ## Options
 
-Type `/usage-meter-options` (or press the gear next to the band) to open the settings pane. Each option has a live sample on the right.
+Type `/status-deck-options` (or press the gear next to the band) to open the settings pane. Each option has a live sample on the right.
 Color changes can be saved or cancelled; every other option is kept immediately.
 
 ## Notes

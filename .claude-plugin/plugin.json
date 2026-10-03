@@ -1,9 +1,9 @@
 {
-  "name": "usage-meter-pills",
+  "name": "status-deck",
   "version": "0.4.4",
   "author": { "name": "wellbrained", "url": "https://github.com/wellbrained" },
-  "homepage": "https://github.com/wellbrained/usage-meter-mod",
-  "description": "Pill-style band above the prompt: plan limits, context window, git branch and more, each switchable. Options: /usage-meter-options",
+  "homepage": "https://github.com/wellbrained/status-deck",
+  "description": "A status deck above the prompt: plan limits, context window, git branch, prompt cache and more, in six styles, each part switchable. Options: /status-deck-options",
   "userConfig": {
     "style": { "type": "string", "title": "Style", "description": "Pills, glass, rings, thin bars, segments or stacked", "default": "pills", "options": ["pills", "glass", "rings", "bars", "segments", "stacked"] },
     "overflow": { "type": "string", "title": "When the band is too wide", "description": "Wrap onto more rows, or switch to the compact layout", "default": "wrap", "options": ["wrap", "compact"] },
