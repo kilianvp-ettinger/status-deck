@@ -1057,19 +1057,19 @@ export function register(on, options) {
           ? '<circle cx="9" cy="9" r="7.25" stroke="' + GREEN + '" stroke-width="1.5"/><circle cx="9" cy="9" r="3.75" fill="' + GREEN + '"/>'
           : '<circle cx="9" cy="9" r="7.25" stroke="' + TEXT + '" stroke-width="1.5"/>',
       )
-    const markedButton = (s, key, svg, glyph, label, onPress) =>
+    const markedButton = (s, key, svg, glyph, label, onPress, alt) =>
       Box({
         flexDirection: 'row',
         alignItems: 'center',
         columnGap: 1,
         children: [
-          Svg ? Svg({ source: svg, alt: ' ', width: 18, height: 18 }) : null,
+          Svg ? Svg({ source: svg, alt, width: 18, height: 18 }) : null,
           Button({ key, label: Svg ? label : glyph + '  ' + label, plain: true, onPress }),
         ].filter(Boolean),
       })
-    const toggleItem = (s, isOn) => markedButton(s, s.key, checkMark(isOn), isOn ? '☑' : '☐', s.label, change(s, !isOn))
+    const toggleItem = (s, isOn) => markedButton(s, s.key, checkMark(isOn), isOn ? '☑' : '☐', s.label, change(s, !isOn), isOn ? 'on' : 'off')
     const choiceItem = (s, value, name, current) =>
-      markedButton(s, s.key + ':' + value, radioMark(value === current), value === current ? '◉' : '○', name, change(s, value))
+      markedButton(s, s.key + ':' + value, radioMark(value === current), value === current ? '◉' : '○', name, change(s, value), value === current ? 'selected' : 'not selected')
     const row = (s) => {
       if (Array.isArray(s.choices)) {
         const current = choice(s.key, s.def)
@@ -1177,7 +1177,7 @@ export function register(on, options) {
         ? Svg({
             source: '<svg xmlns="http://www.w3.org/2000/svg" width="36" height="3" viewBox="0 0 36 3"><rect width="36" height="3" rx="1.5" fill="' +
               BAR_COLORS[g % BAR_COLORS.length] + '"/></svg>',
-            alt: ' ',
+            alt: 'section accent',
             width: 36,
             height: 3,
           })
