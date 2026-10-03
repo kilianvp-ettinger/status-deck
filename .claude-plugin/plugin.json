@@ -1,6 +1,6 @@
 {
   "name": "status-deck",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "author": { "name": "wellbrained", "url": "https://github.com/wellbrained" },
   "homepage": "https://github.com/wellbrained/status-deck",
   "description": "A status deck above the prompt: plan limits, context window, git branch, prompt cache and more, in six styles, each part switchable. Options: /status-deck-options",

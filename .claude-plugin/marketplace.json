@@ -12,7 +12,7 @@
       "name": "status-deck",
       "source": "./",
       "description": "Status band above the prompt: 5-hour and weekly plan limits with pace marker and reset time, context window, git branch, optional tokens and cost. Options: /status-deck-options",
-      "version": "0.4.4",
+      "version": "0.4.5",
       "category": "monitoring",
       "keywords": ["usage", "limits", "context", "git", "statusline", "desktop"],
       "homepage": "https://github.com/wellbrained/status-deck",
