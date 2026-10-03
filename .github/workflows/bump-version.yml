@@ -3,6 +3,11 @@ name: Bump version
 on:
   push:
     branches: [main]
+    # Docs, tests and workflow changes are not a new plugin version
+    paths-ignore:
+      - '**.md'
+      - 'tests/**'
+      - '.github/**'
 
 permissions:
   contents: write
