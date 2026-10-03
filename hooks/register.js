@@ -1039,16 +1039,37 @@ export function register(on, options) {
 
     const hint = (s) => (s.desc ? Text({ dimColor: true, wrap: 'wrap', children: [s.desc] }) : null)
 
-    // Two kinds of control that must not look alike: a checkbox is a square (☑ on, ☐ off) and
-    // switches one thing; a choice is a round radio (◉ picked, ○ not) and exactly one of a set is picked
-    const choiceButton = (s, value, name, current) =>
-      Button({
-        key: s.key + ':' + value,
-        label: (value === current ? '◉  ' : '○  ') + name,
-        variant: value === current ? 'primary' : 'secondary',
-        onPress: change(s, value),
+    // A checkbox is a square mark and switches one thing; a choice is a round radio and exactly one of a set is picked
+    // Check and radio marks drawn as images, sized to the text: green when on, the text color when off.
+    // Only a Button can take a click, so the mark sits in front of a plain (chrome-free) label button.
+    const GREEN = '#3fb58a'
+    const markSvg = (inner) =>
+      '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">' + inner + '</svg>'
+    const checkMark = (isOn) =>
+      markSvg(
+        isOn
+          ? '<rect x="1" y="1" width="16" height="16" rx="4.5" fill="' + GREEN + '"/><path d="M5 9.4l2.7 2.7L13 6.4" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+          : '<rect x="1.75" y="1.75" width="14.5" height="14.5" rx="4" stroke="' + TEXT + '" stroke-width="1.5"/>',
+      )
+    const radioMark = (isOn) =>
+      markSvg(
+        isOn
+          ? '<circle cx="9" cy="9" r="7.25" stroke="' + GREEN + '" stroke-width="1.5"/><circle cx="9" cy="9" r="3.75" fill="' + GREEN + '"/>'
+          : '<circle cx="9" cy="9" r="7.25" stroke="' + TEXT + '" stroke-width="1.5"/>',
+      )
+    const markedButton = (s, key, svg, glyph, label, onPress) =>
+      Box({
+        flexDirection: 'row',
+        alignItems: 'center',
+        columnGap: 1,
+        children: [
+          Svg ? Svg({ source: svg, alt: ' ', width: 18, height: 18 }) : null,
+          Button({ key, label: Svg ? label : glyph + '  ' + label, plain: true, onPress }),
+        ].filter(Boolean),
       })
-
+    const toggleItem = (s, isOn) => markedButton(s, s.key, checkMark(isOn), isOn ? '☑' : '☐', s.label, change(s, !isOn))
+    const choiceItem = (s, value, name, current) =>
+      markedButton(s, s.key + ':' + value, radioMark(value === current), value === current ? '◉' : '○', name, change(s, value))
     const row = (s) => {
       if (Array.isArray(s.choices)) {
         const current = choice(s.key, s.def)
@@ -1058,7 +1079,7 @@ export function register(on, options) {
           flexShrink: 1,
           columnGap: 1,
           rowGap: 1,
-          children: s.choices.map(([value, name]) => choiceButton(s, value, name, current)),
+          children: s.choices.map(([value, name]) => choiceItem(s, value, name, current)),
         })
         if (s.bare) {
           return Box({
@@ -1088,7 +1109,7 @@ export function register(on, options) {
             flexWrap: 'wrap',
             columnGap: 1,
             rowGap: 1,
-            children: s.choices.map(([value, name]) => choiceButton(s, value, name, current)),
+            children: s.choices.map(([value, name]) => choiceItem(s, value, name, current)),
           }),
         ]
         if (isColorKey(s.key) && current === 'custom') {
@@ -1125,12 +1146,7 @@ export function register(on, options) {
             columnGap: 2,
             width: '100%',
             children: [
-              Button({
-                key: s.key,
-                label: (isOn ? '☑  ' : '☐  ') + s.label,
-                variant: 'secondary',
-                onPress: change(s, !isOn),
-              }),
+              toggleItem(s, isOn),
               sampleFor(s, isOn),
             ],
           }),
