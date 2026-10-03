@@ -1061,7 +1061,7 @@ export function register(on, options) {
       Box({
         flexDirection: 'row',
         alignItems: 'center',
-        columnGap: 1,
+        columnGap: 0,
         children: [
           Svg ? Svg({ source: svg, alt, width: 18, height: 18 }) : null,
           Button({ key, label: Svg ? label : glyph + '  ' + label, plain: true, onPress }),
