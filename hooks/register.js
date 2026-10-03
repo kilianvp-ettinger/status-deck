@@ -90,6 +90,8 @@ const SETTINGS = [
   { group: 2, key: 'warnContext', label: 'Context warning', def: true, desc: 'Turns red near full and says compact soon.' },
   { group: 2, key: 'colorContext', label: 'Context color', def: 'blue', choices: COLOR_CHOICES },
   { group: 3, key: 'showGit', label: 'Git branch', def: true },
+  { group: 3, key: 'showTokens', label: 'Session tokens', def: false },
+  { group: 3, key: 'showCost', label: 'Session cost', def: false },
   { group: 3, key: 'showCache', label: 'Prompt cache warm or cold', def: true },
   {
     group: 3,
@@ -112,8 +114,6 @@ const SETTINGS = [
     def: '6h',
     choices: [['1h', '1 hour after the last turn'], ['3h', '3 hours after the last turn'], ['6h', '6 hours after the last turn'], ['12h', '12 hours after the last turn']],
   },
-  { group: 3, key: 'showTokens', label: 'Session tokens', def: false },
-  { group: 3, key: 'showCost', label: 'Session cost', def: false },
 ]
 
 // The manifest's userConfig values
@@ -1039,6 +1039,16 @@ export function register(on, options) {
 
     const hint = (s) => (s.desc ? Text({ dimColor: true, wrap: 'wrap', children: [s.desc] }) : null)
 
+    // Two kinds of control that must not look alike: a checkbox is a square (☑ on, ☐ off) and
+    // switches one thing; a choice is a round radio (◉ picked, ○ not) and exactly one of a set is picked
+    const choiceButton = (s, value, name, current) =>
+      Button({
+        key: s.key + ':' + value,
+        label: (value === current ? '◉  ' : '○  ') + name,
+        variant: value === current ? 'primary' : 'secondary',
+        onPress: change(s, value),
+      })
+
     const row = (s) => {
       if (Array.isArray(s.choices)) {
         const current = choice(s.key, s.def)
@@ -1048,14 +1058,7 @@ export function register(on, options) {
           flexShrink: 1,
           columnGap: 1,
           rowGap: 1,
-          children: s.choices.map(([value, name]) =>
-            Button({
-              key: s.key + ':' + value,
-              label: name,
-              variant: value === current ? 'primary' : 'secondary',
-              onPress: change(s, value),
-            }),
-          ),
+          children: s.choices.map(([value, name]) => choiceButton(s, value, name, current)),
         })
         if (s.bare) {
           return Box({
@@ -1085,14 +1088,7 @@ export function register(on, options) {
             flexWrap: 'wrap',
             columnGap: 1,
             rowGap: 1,
-            children: s.choices.map(([value, name]) =>
-              Button({
-                key: s.key + ':' + value,
-                label: name,
-                variant: value === current ? 'primary' : 'secondary',
-                onPress: change(s, value),
-              }),
-            ),
+            children: s.choices.map(([value, name]) => choiceButton(s, value, name, current)),
           }),
         ]
         if (isColorKey(s.key) && current === 'custom') {
@@ -1131,8 +1127,8 @@ export function register(on, options) {
             children: [
               Button({
                 key: s.key,
-                label: (isOn ? '✓  ' : '') + s.label,
-                variant: isOn ? 'primary' : 'secondary',
+                label: (isOn ? '☑  ' : '☐  ') + s.label,
+                variant: 'secondary',
                 onPress: change(s, !isOn),
               }),
               sampleFor(s, isOn),
