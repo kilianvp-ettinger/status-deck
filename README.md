@@ -25,7 +25,7 @@ Also adjustable: fully rounded or rectangular pills, light-theme text, a compact
 Add the marketplace and install the plugin:
 
 ```text
-/plugin marketplace add wellbrained/status-deck
+/plugin marketplace add kilianvp-ettinger/status-deck
 /plugin install status-deck@status-deck
 ```
 

@@ -15,8 +15,8 @@
       "version": "0.4.5",
       "category": "monitoring",
       "keywords": ["usage", "limits", "context", "git", "statusline", "desktop"],
-      "homepage": "https://github.com/wellbrained/status-deck",
-      "repository": "https://github.com/wellbrained/status-deck"
+      "homepage": "https://github.com/kilianvp-ettinger/status-deck",
+      "repository": "https://github.com/kilianvp-ettinger/status-deck"
     }
   ]
 }
